@@ -23,11 +23,18 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
+        sideBar = doc.createElement('canvas'),
+        sideBarCtx = sideBar.getContext('2d'),
         lastTime;
 
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
+
+    sideBar.width = 300;
+    sideBar.height = canvas.height;
+    doc.body.appendChild(sideBar);
+
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -80,7 +87,6 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -94,7 +100,10 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        allItems.forEach(function(item) {
+            item.update(dt);
+        });
+        player.update(dt);
     }
 
     /* This function initially draws the "game level", it will then call
@@ -104,6 +113,7 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
+
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
@@ -136,6 +146,13 @@ var Engine = (function(global) {
             }
         }
 
+        sideBarCtx.font = '14px Arial';
+        sideBarCtx.fillText('Use the arrows keys to', 20, 420);
+        sideBarCtx.fillText('move up, left, right, down.', 20, 440);
+        sideBarCtx.fillText('Reach the water to increase your score!', 20, 520);
+        sideBarCtx.clearRect(0, 0, 200, 320);
+
+
         renderEntities();
     }
 
@@ -150,6 +167,9 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
+        allItems.forEach(function(item) {
+            item.render();
+        });
 
         player.render();
     }
@@ -159,7 +179,9 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        if (player.lives == 0) {
+          init();
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -171,7 +193,10 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Heart.png',
+        'images/Key.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
@@ -180,4 +205,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.sideBarCtx = sideBarCtx;
 })(this);
