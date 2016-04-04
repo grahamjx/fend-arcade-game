@@ -1,3 +1,16 @@
+/* This file is provided by Udactiy for completion of the Frogger arcade project.
+   The majority of code and comments written here were done by Udacity staff.
+   I have made some modifications to this file in order to implement some of my
+   features.
+
+   1. Added a secondary sideBar canvas so I can provide game instructions as well
+   as update the players lives and score. This canvas is assinged to sideBarCtx.
+
+   See lines 161 to 171 for implementation. sideBarCtx is then set to a global
+   variable so I can easily access it in app.js
+
+   All other comments below were written by Udacity.
+
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
@@ -71,7 +84,6 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
         lastTime = Date.now();
         main();
     }
@@ -101,7 +113,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         allItems.forEach(function(item) {
-            item.update(dt);
+            item.update();
         });
         player.update(dt);
     }
@@ -146,12 +158,17 @@ var Engine = (function(global) {
             }
         }
 
-        sideBarCtx.font = '14px Arial';
+        sideBarCtx.clearRect(0, 0, 500, 600);
+        sideBarCtx.fillStyle = '#000000';
+        sideBarCtx.font = 'italic bold 16px Helvetica, Sans-serif';
+        sideBarCtx.fillText('By: Joel Graham', 60, 140);
         sideBarCtx.fillText('Use the arrows keys to', 20, 420);
         sideBarCtx.fillText('move up, left, right, down.', 20, 440);
-        sideBarCtx.fillText('Reach the water to increase your score!', 20, 520);
-        sideBarCtx.clearRect(0, 0, 200, 320);
+        sideBarCtx.fillText('Reach the water and collect items', 20, 520);
+        sideBarCtx.fillText('to increase your score!', 20, 550);
 
+        sideBarCtx.font = 'italic bold 24px Helvetica, Sans-serif';
+        sideBarCtx.fillText('JavaScript Arcade!', 20,100);
 
         renderEntities();
     }
@@ -173,17 +190,6 @@ var Engine = (function(global) {
 
         player.render();
     }
-
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        if (player.lives == 0) {
-          init();
-        }
-    }
-
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
