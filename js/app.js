@@ -241,6 +241,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// Listens for mouse clicks which are used for character selection
 document.addEventListener('click',function(loc) {
   var x = loc.pageX;
   var y = loc.pageY;
