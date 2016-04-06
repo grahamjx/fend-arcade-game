@@ -6,7 +6,7 @@
    1. Added a secondary sideBar canvas so I can provide game instructions as well
    as update the players lives and score. This canvas is assinged to sideBarCtx.
 
-   See lines 161 to 171 for implementation. sideBarCtx is then set to a global
+   See lines 161 to 175 for implementation. sideBarCtx is then set to a global
    variable so I can easily access it in app.js
 
    All other comments below were written by Udacity.
@@ -161,14 +161,18 @@ var Engine = (function(global) {
         sideBarCtx.clearRect(0, 0, 500, 600);
         sideBarCtx.fillStyle = '#000000';
         sideBarCtx.font = 'italic bold 16px Helvetica, Sans-serif';
-        sideBarCtx.fillText('By: Joel Graham', 60, 140);
-        sideBarCtx.fillText('Use the arrows keys to', 20, 420);
-        sideBarCtx.fillText('move up, left, right, down.', 20, 440);
-        sideBarCtx.fillText('Reach the water and collect items', 20, 520);
-        sideBarCtx.fillText('to increase your score!', 20, 550);
+        sideBarCtx.fillText('By: Joel Graham', 60, 100);
+        sideBarCtx.fillText('Select a character:', 20, 250);
+        sideBarCtx.drawImage(Resources.get('images/char-horn-girl.png'), 0, 220);
+        sideBarCtx.drawImage(Resources.get('images/char-cat-girl.png'), 100, 220);
+        sideBarCtx.drawImage(Resources.get('images/char-boy.png'), 200, 220);
+        sideBarCtx.fillText('Use the arrows keys to', 20, 450);
+        sideBarCtx.fillText('move up, left, right, down.', 20, 480);
+        sideBarCtx.fillText('Reach the water and collect items', 20, 550);
+        sideBarCtx.fillText('to increase your score!', 20, 580);
 
         sideBarCtx.font = 'italic bold 24px Helvetica, Sans-serif';
-        sideBarCtx.fillText('JavaScript Arcade!', 20,100);
+        sideBarCtx.fillText('JavaScript Arcade!', 20,70);
 
         renderEntities();
     }
@@ -202,7 +206,9 @@ var Engine = (function(global) {
         'images/char-boy.png',
         'images/Heart.png',
         'images/Key.png',
-        'images/Star.png'
+        'images/Star.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png'
     ]);
     Resources.onReady(init);
 

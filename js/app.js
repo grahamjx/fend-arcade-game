@@ -8,8 +8,8 @@
 
 var Enemy = function(rowStart) {
   this.sprite = 'images/enemy-bug.png';
-  this.x = randomNum();
-  this.speed = randomNum();
+  this.x = this.randomNum();
+  this.speed = this.randomNum();
   this.y = rowStart;
   this.row = Math.floor((this.y + SQ_HEIGHT) / SQ_HEIGHT);
   this.col = Math.floor((this.x + ENEMY_OFFSET) / SQ_WIDTH);
@@ -30,7 +30,7 @@ Enemy.prototype.update = function(dt) {
   }
   else{
     this.x = 0 - SQ_WIDTH;
-    this.speed = randomNum();
+    this.speed = this.randomNum();
   }
   if (this.row == player.row && this.col == player.col){
       player.enemyCollision();
@@ -41,6 +41,12 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+// Returns a random whole number used for x-axis placement and speed.
+Enemy.prototype.randomNum = function() {
+  return Math.floor(Math.random() * 500) + 100;
+};
+
 
 // Player Object: Sets all starting properties for the player.
 var Player = function(){
@@ -54,10 +60,10 @@ var Player = function(){
 };
 
 // Update Function: Score, position and # of lives is reset once lives = 0.
-Player.prototype.update = function(dt) {
-  if (player.lives == 0) {
-    player.score = 0;
-    player.lives = 3;
+Player.prototype.update = function() {
+  if (this.lives == 0) {
+    this.score = 0;
+    this.lives = 3;
     player.resetPosition();
   }
 };
@@ -116,6 +122,19 @@ Player.prototype.handleInput = function(input) {
   }
 };
 
+//Uses mouse input to change the character sprite
+Player.prototype.handleInputMouse = function(x,y) {
+  if (y > charTop && y < charBot && x > charLeft && x < charRight) {
+    this.sprite = 'images/char-horn-girl.png';
+  }
+  if (y > charTop && y < charBot && x > (charLeft+100) && x < (charRight+100)) {
+    this.sprite = 'images/char-cat-girl.png';
+  }
+  if (y > charTop && y < charBot && x > (charLeft+200) && x < (charRight+200)) {
+    this.sprite = 'images/char-boy.png';
+  }
+}
+
 // Resets the player back to starting position
 Player.prototype.resetPosition = function() {
   this.x = startX;
@@ -170,48 +189,44 @@ Item.prototype.itemCollision = function() {
 };
 
 // Updates the sideBar canvas depending on the type (lives or score)
-// General use function, doesn't need to be apart of every new player object.
+// General use function
 var sideBarUpdate = function(type,text) {
   switch (type) {
     case 'lives':
       sideBarCtx.font = 'italic 24px Helvetica, Sans-serif';
       sideBarCtx.fillStyle = '#000000';
-      sideBarCtx.fillText(text, 20, 200);
+      sideBarCtx.fillText(text, 20, 160);
     break;
 
     case 'score':
       sideBarCtx.font = 'italic 24px Helvetica, Sans-serif';
       sideBarCtx.fillStyle = '#000000';
-      sideBarCtx.fillText(text, 20, 240);
+      sideBarCtx.fillText(text, 20, 200);
     break;
   }
 };
-
-// Returns a random whole number used for x-axis placement and speed.
-// General use function, doesn't need to be apart of every enemy object.
-var randomNum = function() {
-  return Math.floor(Math.random() * 500) + 100;
-}
 
 // Global variables and object initialization
 var rowOne = 48,
     rowTwo = 144,
     rowThree = 225,
     startX = 200,
-    startY = 400;
+    startY = 400,
+    charTop = 287;
+    charBot = 368;
+    charLeft = 1070;
+    charRight = 1130;
 
-var ENEMY_OFFSET = 80,
+    ENEMY_OFFSET = 80,
     ITEM_OFFSET = 20,
     SQ_WIDTH = 101,
     SQ_HEIGHT = 83,
     MAX_ROW = 6,
     MAX_COL = 5,
-    SPAWN_RATE = 0.0007;
+    SPAWN_RATE = 0.0007,
 
-var allEnemies = [new Enemy(rowOne),new Enemy(rowTwo),new Enemy(rowThree)],
-    allItems = [new Item('Heart'),
-                new Item('Key'),
-                new Item('Star')],
+    allEnemies = [new Enemy(rowOne),new Enemy(rowTwo),new Enemy(rowThree)],
+    allItems = [new Item('Heart'),new Item('Key'),new Item('Star')],
     player = new Player;
 
 // This listens for key presses and sends the keys to your Player.handleInput() method.
@@ -225,3 +240,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+document.addEventListener('click',function(loc) {
+  var x = loc.pageX;
+  var y = loc.pageY;
+
+  player.handleInputMouse(x,y);
+})
