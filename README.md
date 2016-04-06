@@ -6,15 +6,15 @@ Udacity's Front-End Web Developer Nanodegree program.
 
 ### Play
 
-You can play the most up-to-date version of this game by visiting (http://slkcoin.github.io/FEND-arcade-game/)
+You can play the most up-to-date version of this game by visiting http://slkcoin.github.io/FEND-arcade-game/
 
 ### Install
 
 Alternatively you can chose to run a local version of the game:
 
-`$ git clone https://github.com/slkcoin/FEND-arcade-game
- $ open index.html`
+`$ git clone https://github.com/slkcoin/FEND-arcade-game`
+`$ open index.html`
 
 ### License
 
-The content of this repository is licensed under the [MIT License](http://slkcoin.github.io/FEND-arcade-game/License.txt) 
+The content of this repository is licensed under the [MIT License](https://opensource.org/licenses/MIT)
