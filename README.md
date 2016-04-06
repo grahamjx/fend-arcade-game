@@ -1,6 +1,20 @@
-frontend-nanodegree-arcade-game
-===============================
+#FEND-arcade-game
 
-Students should use this [rubric](https://www.udacity.com/course/viewer/#!/c-nd001/l-2696458597/m-2687128535) for self-checking their submission.
+This arcade game clone is similar to the classic "Frogger". A player moves their
+character, while trying to avoid getting hit by enemies. It was created as part of
+Udacity's Front-End Web Developer Nanodegree program.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+### Play
+
+You can play the most up-to-date version of this game by visiting (http://slkcoin.github.io/FEND-arcade-game/)
+
+### Install
+
+Alternatively you can chose to run a local version of the game:
+
+`$ git clone https://github.com/slkcoin/FEND-arcade-game
+ $ open index.html`
+
+### License
+
+The content of this repository is licensed under the [MIT License](http://slkcoin.github.io/FEND-arcade-game/License.txt) 
