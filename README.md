@@ -9,14 +9,13 @@ Udacity's Front-End Web Developer Nanodegree program.
 The player uses the arrow keys to move up, right, left and down.
 The goal is to get as many points as possible before running out of lives.
 
-Reach the water: **+100 Points**
-**Star** or **Key** Items: **+200 Points!**
+Reach the water: **+100 Points!**
 
-**Heart**: +1 Life
+Pick-up a _Star_ or _Key_ Item: **+200 Points!**
 
-Getting hit by enemies: **-100 Points and -1 Life :(**
+Pick-up a _Heart_ Item: **+1 Life**
 
-Once you run out of lives, your **Lives** are reset back to **3** and your points are reset to **0**
+Get hit by an enemy: **-100 Points and -1 Life**
 
 ### Play / Install
 
