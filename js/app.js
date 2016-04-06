@@ -1,5 +1,25 @@
 // This file contains the majority of game-logic used in my frogger arcade game.
 
+//Global Variables
+var ROW_ONE = 48,
+    ROW_TWO = 144,
+    ROW_THREE = 225,
+    START_X = 200,
+    START_Y = 400,
+
+    CHAR_TOP = 287;
+    CHAR_BOT = 368;
+    CHAR_LEFT = 1070;
+    CHAR_RIGHT = 1130;
+
+    ENEMY_OFFSET = 80,
+    ITEM_OFFSET = 20,
+    SQ_WIDTH = 101,
+    SQ_HEIGHT = 83,
+    MAX_ROW = 6,
+    MAX_COL = 5,
+    SPAWN_RATE = 0.0007;
+
 /* Enemy Object: sets the x-axis and speed using a randomized value.
    Row and Col properties are set to whole numbers corresponding to the gameboard.
    An offset value is used in order to center the enemy within a square.
@@ -51,8 +71,8 @@ Enemy.prototype.randomNum = function() {
 // Player Object: Sets all starting properties for the player.
 var Player = function(){
   this.sprite = 'images/char-boy.png';
-  this.x = startX;
-  this.y = startY;
+  this.x = START_X;
+  this.y = START_Y;
   this.row = 5;
   this.col = 2;
   this.score = 0;
@@ -64,7 +84,7 @@ Player.prototype.update = function() {
   if (this.lives == 0) {
     this.score = 0;
     this.lives = 3;
-    player.resetPosition();
+    this.resetPosition();
   }
 };
 
@@ -78,8 +98,8 @@ Player.prototype.enemyCollision = function() {
 // Draw the player as well as updates to the sideBar (current lives and score)
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  sideBarUpdate('lives','Lives: ' + this.lives);
-  sideBarUpdate('score','Score: ' + this.score);
+  this.sideBarUpdate('lives','Lives: ' + this.lives);
+  this.sideBarUpdate('score','Score: ' + this.score);
 };
 
 /* This function handles keyboard input and updates player properties accordingly.
@@ -94,8 +114,8 @@ Player.prototype.handleInput = function(input) {
         this.row--;
       }
       else {
-        player.score += 100;
-        player.resetPosition();
+        this.score += 100;
+        this.resetPosition();
       }
     break;
 
@@ -124,23 +144,41 @@ Player.prototype.handleInput = function(input) {
 
 //Uses mouse input to change the character sprite
 Player.prototype.handleInputMouse = function(x,y) {
-  if (y > charTop && y < charBot && x > charLeft && x < charRight) {
+  if (y > CHAR_TOP && y < CHAR_BOT && x > CHAR_LEFT && x < CHAR_RIGHT) {
     this.sprite = 'images/char-horn-girl.png';
   }
-  if (y > charTop && y < charBot && x > (charLeft+100) && x < (charRight+100)) {
+  if (y > CHAR_TOP && y < CHAR_BOT && x > (CHAR_LEFT+100) && x < (CHAR_RIGHT+100)) {
     this.sprite = 'images/char-cat-girl.png';
   }
-  if (y > charTop && y < charBot && x > (charLeft+200) && x < (charRight+200)) {
+  if (y > CHAR_TOP && y < CHAR_BOT && x > (CHAR_LEFT+200) && x < (CHAR_RIGHT+200)) {
     this.sprite = 'images/char-boy.png';
   }
 }
 
 // Resets the player back to starting position
 Player.prototype.resetPosition = function() {
-  this.x = startX;
-  this.y = startY;
+  this.x = START_X;
+  this.y = START_Y;
   this.row = 5;
   this.col = 2;
+};
+
+// Updates the sideBar canvas depending on the type (lives or score)
+// General use function
+Player.prototype.sideBarUpdate = function(type,text) {
+  switch (type) {
+    case 'lives':
+      sideBarCtx.font = 'italic 24px Helvetica, Sans-serif';
+      sideBarCtx.fillStyle = '#000000';
+      sideBarCtx.fillText(text, 20, 160);
+    break;
+
+    case 'score':
+      sideBarCtx.font = 'italic 24px Helvetica, Sans-serif';
+      sideBarCtx.fillStyle = '#000000';
+      sideBarCtx.fillText(text, 20, 200);
+    break;
+  }
 };
 
 /* Item Object: Places new items randomly so they always fall within the same rows
@@ -188,46 +226,10 @@ Item.prototype.itemCollision = function() {
   }
 };
 
-// Updates the sideBar canvas depending on the type (lives or score)
-// General use function
-var sideBarUpdate = function(type,text) {
-  switch (type) {
-    case 'lives':
-      sideBarCtx.font = 'italic 24px Helvetica, Sans-serif';
-      sideBarCtx.fillStyle = '#000000';
-      sideBarCtx.fillText(text, 20, 160);
-    break;
-
-    case 'score':
-      sideBarCtx.font = 'italic 24px Helvetica, Sans-serif';
-      sideBarCtx.fillStyle = '#000000';
-      sideBarCtx.fillText(text, 20, 200);
-    break;
-  }
-};
-
-// Global variables and object initialization
-var rowOne = 48,
-    rowTwo = 144,
-    rowThree = 225,
-    startX = 200,
-    startY = 400,
-    charTop = 287;
-    charBot = 368;
-    charLeft = 1070;
-    charRight = 1130;
-
-    ENEMY_OFFSET = 80,
-    ITEM_OFFSET = 20,
-    SQ_WIDTH = 101,
-    SQ_HEIGHT = 83,
-    MAX_ROW = 6,
-    MAX_COL = 5,
-    SPAWN_RATE = 0.0007,
-
-    allEnemies = [new Enemy(rowOne),new Enemy(rowTwo),new Enemy(rowThree)],
+// Object initialization
+var allEnemies = [new Enemy(ROW_ONE),new Enemy(ROW_TWO),new Enemy(ROW_THREE)],
     allItems = [new Item('Heart'),new Item('Key'),new Item('Star')],
-    player = new Player;
+    player = new Player();
 
 // This listens for key presses and sends the keys to your Player.handleInput() method.
 document.addEventListener('keyup', function(e) {

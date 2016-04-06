@@ -4,11 +4,23 @@ This arcade game clone is similar to the classic "Frogger". A player moves their
 character while trying to avoid getting hit by enemies. It was created as part of
 Udacity's Front-End Web Developer Nanodegree program.
 
-### Play
+### How-to
+
+The player uses the arrow keys to move up, right, left and down.
+The goal is to get as many points as possible before running out of lives.
+
+Reach the water: **+100 Points**
+**Star** or **Key** Items: **+200 Points!**
+
+**Heart**: +1 Life
+
+Getting hit by enemies: **-100 Points and -1 Life :(**
+
+Once you run out of lives, your **Lives** are reset back to **3** and your points are reset to **0**
+
+### Play / Install
 
 You can play the most up-to-date version of this game by visiting http://slkcoin.github.io/FEND-arcade-game/
-
-### Install
 
 Alternatively you can chose to run a local version of the game:
 
