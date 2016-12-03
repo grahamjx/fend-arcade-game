@@ -19,7 +19,7 @@ Get hit by an enemy: **-100 Points and -1 Life**
 
 ### Play / Install
 
-You can play the most up-to-date version of this game by visiting http://grahamjx.github.io/FEND-arcade-game/
+You can play the most up-to-date version of this game by visiting http://grahamjx.github.io/fend-arcade-game/
 
 Alternatively you can chose to run a local version of the game:
 
